@@ -27,6 +27,11 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
   ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+    }
+  ],
   rules: {
     '@typescript-eslint/comma-dangle': ['error', {
       arrays: 'always-multiline',

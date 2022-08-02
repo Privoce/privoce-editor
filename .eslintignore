@@ -3,7 +3,11 @@ build
 coverage
 
 .babel.config.js
+.eslintrc.js
 tailwind.config.js
+next.config.js
 next-i18next.config.js
 postcss.config.js
 commitlint.config.js
+
+./src/aws-exports.js
