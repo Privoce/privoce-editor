@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
-import Editor from '../editor';
+import Editor from '../src/editor';
 
 const Home: NextPage = () => {
   const [value, setValue] = useState<any>({});
