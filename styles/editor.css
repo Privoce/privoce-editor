@@ -31,14 +31,6 @@
     font-weight: 600;
 }
 
-.editor-body code {
-    @apply bg-gray-100 dark:bg-gray-700 rounded-md;
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-    padding: .2em .4em;
-    margin: 0;
-    font-size: 85%;
-}
-
 /* block style -------------------------------------------------------------- */
 .editor-body h1,
 .editor-body h2,
@@ -73,6 +65,15 @@
     margin-bottom: 1em;
 }
 
+/* code --------------------------------------------------------------------- */
+.editor-body code {
+    @apply bg-gray-100 dark:bg-gray-700 rounded-md;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+}
+
 .editor-body pre {
     @apply bg-gray-100 dark:bg-gray-700 rounded-md pt-2 pb-2 pl-4 pr-4;
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
@@ -96,4 +97,43 @@
     word-break: normal;
     white-space: pre;
     background: transparent;
+}
+
+/* list --------------------------------------------------------------------- */
+.editor-body ul {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    list-style-type: disc;
+}
+
+.editor-body ol {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    list-style-type: decimal;
+}
+
+.editor-body ul ul {
+    list-style: circle;
+}
+
+.editor-body ol ul {
+    list-style: circle;
+}
+
+.editor-body ol ol ul, ol ul ul, ul ol ul, ul ul ul {
+    list-style: square;
+}
+
+.editor-body li p {
+    margin: 0.5rem 0;
+}
+
+.editor-body li ul {
+    margin: 0 0;
+}
+
+.editor-body li ol {
+    margin: 0 0;
 }
