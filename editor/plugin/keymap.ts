@@ -2,6 +2,7 @@ import { Schema } from 'prosemirror-model';
 import { Command } from 'prosemirror-state';
 import { undo, redo } from 'prosemirror-history';
 import { toggleMark, joinUp, joinDown } from 'prosemirror-commands';
+import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 import UAParser from 'ua-parser-js';
 
 const uaParser = new UAParser();
@@ -42,6 +43,15 @@ function bindKeymap(schema: Schema, mapKeys?: { [key: string]: false | string })
   if (schema.marks.code) {
     type = schema.marks.code;
     bind("Mod-`", toggleMark(type))
+  }
+
+  if (schema.nodes.list_item) {
+    type = schema.nodes.list_item;
+    bind('Enter', splitListItem(type));
+    bind('Shift-Tab', liftListItem(type));
+    bind('Tab', sinkListItem(type));
+    bind("Mod-[", liftListItem(type));
+    bind("Mod-]", sinkListItem(type));
   }
 
   return keys;
