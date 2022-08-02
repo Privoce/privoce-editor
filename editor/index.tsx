@@ -42,7 +42,6 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
       dispatchTransaction(tr) {
         const newState = editorView.state.apply(tr);
         const html = getHtml(newState);
-        console.log('html: ', html);
         onChangeRef.current(html);
         editorView.updateState(newState);
       },
