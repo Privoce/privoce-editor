@@ -1,0 +1,9 @@
+node_modules
+build
+coverage
+
+.babel.config.js
+tailwind.config.js
+next-i18next.config.js
+postcss.config.js
+commitlint.config.js

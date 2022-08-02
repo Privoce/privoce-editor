@@ -1,0 +1,66 @@
+/* prosemirror -------------------------------------------------------------- */
+.editor-body .ProseMirror {
+    outline: none;
+    padding: 0 16px;
+}
+
+.editor-body .ProseMirror-selectednode {
+    box-shadow: rgb(180, 213, 255) 0 0 0 2px;
+    /*outline: 2px solid rgb(180, 213, 255);*/
+}
+
+/* reset style ---------------------------------------------------------------*/
+.editor-body > * {
+    outline: none;
+}
+
+.editor-body > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* mark style --------------------------------------------------------------- */
+.editor-body a {
+    @apply text-blue-500 hover:underline;
+}
+
+.editor-body em {
+    font-style: italic;
+}
+
+.editor-body strong {
+    font-weight: 600;
+}
+
+/* block style -------------------------------------------------------------- */
+.editor-body h1,
+.editor-body h2,
+.editor-body h3,
+.editor-body h4,
+.editor-body h5,
+.editor-body h6 {
+    @apply text-black dark:text-white;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.editor-body blockquote {
+    @apply border-l dark:border-gray-600 text-gray-500 dark:text-gray-400;
+    border-left-width: .25em;
+    padding: 0 1em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+.editor-body blockquote:first-child {
+    margin-top: 0;
+}
+
+.editor-body blockquote blockquote {
+    padding-right: 0;
+}
+
+.editor-body p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}

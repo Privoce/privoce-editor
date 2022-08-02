@@ -1,0 +1,24 @@
+.bg-img {
+    @apply bg-gray-100 dark:bg-gray-700;
+}
+
+.bg-body {
+    @apply bg-gray-50 dark:bg-gray-900;
+}
+
+.bg-nav {
+    @apply bg-white dark:bg-gray-900;
+}
+
+.bg-content {
+    @apply bg-white dark:bg-gray-800;
+}
+
+.bg-input {
+    @apply bg-gray-50 dark:bg-gray-900;
+}
+
+.fill-primary {
+    @apply fill-gray-400 dark:fill-gray-600;
+}
+

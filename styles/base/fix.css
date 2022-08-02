@@ -1,0 +1,9 @@
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* fixed: 修复弹窗滚动锁屏时滚动条跳动的问题 */
+html {
+    padding-right: 0 !important;
+}

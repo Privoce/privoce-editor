@@ -1,0 +1,3 @@
+.hover-gray {
+    @apply sm:hover:bg-gray-100 sm:dark:hover:bg-gray-700;
+}

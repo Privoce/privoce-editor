@@ -1,0 +1,7 @@
+.text-color-primary {
+    @apply text-gray-900 dark:text-gray-200;
+}
+
+.text-color-secondary {
+    @apply text-gray-500 dark:text-gray-400;
+}

@@ -1,0 +1,19 @@
+.border-primary {
+    @apply border border-gray-200 dark:border-gray-700;
+}
+
+.border-b-primary {
+    @apply border-b border-gray-200 dark:border-gray-700;
+}
+
+.border-t-primary {
+    @apply border-t border-gray-200 dark:border-gray-700;
+}
+
+.border-l-primary {
+    @apply border-l border-gray-200 dark:border-gray-700;
+}
+
+.border-r-primary {
+    @apply border-r border-gray-200 dark:border-gray-700;
+}

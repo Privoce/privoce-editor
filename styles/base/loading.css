@@ -1,0 +1,113 @@
+.loading-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.loading-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.loading-ellipsis div:nth-child(1) {
+    @apply bg-orange-500;
+    left: 8px;
+    animation: loading-ellipsis1 0.6s infinite;
+}
+.loading-ellipsis div:nth-child(2) {
+    @apply bg-yellow-500;
+    left: 8px;
+    animation: loading-ellipsis2 0.6s infinite;
+}
+.loading-ellipsis div:nth-child(3) {
+    @apply bg-blue-500;
+    left: 32px;
+    animation: loading-ellipsis2 0.6s infinite;
+}
+.loading-ellipsis div:nth-child(4) {
+    @apply bg-purple-500;
+    left: 56px;
+    animation: loading-ellipsis3 0.6s infinite;
+}
+@keyframes loading-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes loading-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+@keyframes loading-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
+}
+
+/* spin --------------------------------------------------------------------- */
+.spin-dot {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    width: 1em;
+    height: 1em;
+}
+.spin-dot-item {
+    @apply bg-blue-500;
+    position: absolute;
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 100%;
+    transform: scale(0.75);
+    transform-origin: 50% 50%;
+    opacity: 0.7;
+    animation: spinDotMove 1s infinite linear alternate;
+}
+.spin-dot-item:nth-child(1) {
+    top: 0;
+    left: 0;
+}
+.spin-dot-item:nth-child(2) {
+    top: 0;
+    right: 0;
+    animation-delay: 0.4s;
+}
+.spin-dot-item:nth-child(3) {
+    right: 0;
+    bottom: 0;
+    animation-delay: 0.8s;
+}
+.spin-dot-item:nth-child(4) {
+    bottom: 0;
+    left: 0;
+    animation-delay: 1.2s;
+}
+.spin-dot-spin {
+    transform: rotate(45deg);
+    animation: spinDotRotate 1.2s infinite linear;
+}
+
+@keyframes spinDotMove {
+    to {
+        opacity: 1;
+    }
+}
+@keyframes spinDotRotate {
+    to {
+        transform: rotate(405deg);
+    }
+}
