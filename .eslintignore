@@ -7,3 +7,5 @@ tailwind.config.js
 next-i18next.config.js
 postcss.config.js
 commitlint.config.js
+.eslintrc.js
+next.config.js

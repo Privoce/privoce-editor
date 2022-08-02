@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, Selection } from 'prosemirror-state';
-import { DOMParser } from 'prosemirror-model';
-import deserializer from './model/deserializer';
+import { DOMParser, DOMSerializer } from 'prosemirror-model';
 import Toolbar from './toolbar';
 import schema from './schema';
 import plugins from './plugin';
@@ -36,6 +35,7 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
 
   useEffect(() => {
     if (!ref.current) return () => {};
+
     const editorState = EditorState.create({
       plugins,
       doc: DOMParser.fromSchema(schema).parse(value),
@@ -46,6 +46,12 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
         const newState = editorView.state.apply(tr);
         onChangeRef.current(newState.toJSON());
         editorView.updateState(newState);
+
+        const fragment = DOMSerializer
+          .fromSchema(schema)
+          .serializeFragment(editorView.state.doc.content);
+
+        console.log('html: ', new XMLSerializer().serializeToString(fragment));
       },
     });
     // 在初始化时聚焦，计算 tr，保证 blockIndex 插件被触发一次
