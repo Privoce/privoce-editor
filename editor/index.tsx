@@ -62,8 +62,15 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
   }, []);
 
   return (
-    <div className="border-primary rounded-lg min-h-[160px] w-[680px]">
-      <Toolbar />
+    <div
+      className="cursor-text border-primary divide-color-primary divide-y rounded-lg min-h-[160px] w-[680px]"
+      onClick={e => {
+        e.stopPropagation();
+        if (e.target !== e.currentTarget) return;
+        view?.focus();
+      }}
+    >
+      <Toolbar view={view} schema={schema} />
       <div ref={ref} className="editor-body" spellCheck={false} />
     </div>
   );

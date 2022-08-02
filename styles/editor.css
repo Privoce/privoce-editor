@@ -31,6 +31,14 @@
     font-weight: 600;
 }
 
+.editor-body code {
+    @apply bg-gray-100 dark:bg-gray-700 rounded-md;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+}
+
 /* block style -------------------------------------------------------------- */
 .editor-body h1,
 .editor-body h2,
@@ -63,4 +71,29 @@
 .editor-body p {
     margin-top: 0;
     margin-bottom: 1em;
+}
+
+.editor-body pre {
+    @apply bg-gray-100 dark:bg-gray-700 rounded-md pt-2 pb-2 pl-4 pr-4;
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    word-break: normal;
+    word-wrap: normal;
+    margin-top: 0;
+    margin-bottom: 1em;
+    box-sizing: border-box;
+}
+
+.editor-body pre > code {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    overflow: visible;
+    line-height: inherit;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
 }

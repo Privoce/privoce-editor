@@ -70,11 +70,21 @@ const baseSchema = new Schema({
       ],
       toDOM: () => ['em', 0],
     },
+    s: {
+      parseDOM: [
+        { tag: 's' },
+        { style: 'text-decoration=line-through' },
+      ],
+      toDOM: () => ['s', 0],
+    },
+    u: { parseDOM: [{ tag: 'u' }], toDOM: () => ['u', 0] },
+    code: { parseDOM: [{ tag: 'code' },], toDOM: () => ['code', 0] },
   },
 });
 
 const schema = new Schema({
   nodes: addListNodes(baseSchema.spec.nodes, 'block+', 'block'),
+  marks: baseSchema.spec.marks,
 });
 
 export default schema;
