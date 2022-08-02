@@ -7,10 +7,18 @@ import schema from './schema';
 import plugins from './plugin';
 
 interface Props {
-  value: any;
+  value: string;
   autofocus?: boolean;
-  onChange: (value: any) => void;
+  onChange: (value: string) => void;
 }
+
+// const serializer = new XMLSerializer();
+
+const setHtml = (html: string) => {
+  const element = document.createElement('div');
+  element.innerHTML = html;
+  return DOMParser.fromSchema(schema).parse(element);
+};
 
 const Index: FC<Props> = ({ value, autofocus, onChange }) => {
   const [view, setView] = useState<EditorView | null>(null);
@@ -33,13 +41,18 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [value]);
 
+  // const getHtml = (): string => {
+  //   if (!view) return '';
+  //   const fragment = DOMSerializer.fromSchema(schema)
+  //     .serializeFragment(view.state.doc.content);
+  //   return serializer.serializeToString(fragment);
+  // };
+
+
+
   useEffect(() => {
     if (!ref.current) return () => {};
-
-    const editorState = EditorState.create({
-      plugins,
-      doc: DOMParser.fromSchema(schema).parse(value),
-    });
+    const editorState = EditorState.create({ plugins, doc: setHtml(value) });
     const editorView = new EditorView(ref.current, {
       state: editorState,
       dispatchTransaction(tr) {
@@ -49,7 +62,7 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
 
         const fragment = DOMSerializer
           .fromSchema(schema)
-          .serializeFragment(editorView.state.doc.content);
+          .serializeFragment(newState.doc.content);
 
         console.log('html: ', new XMLSerializer().serializeToString(fragment));
       },

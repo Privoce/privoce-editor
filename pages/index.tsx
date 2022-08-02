@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Editor from '../src/editor';
 
 const Home: NextPage = () => {
-  const [value, setValue] = useState<any>({});
+  const [value, setValue] = useState<string>('');
 
   return (
     <div className="flex items-center justify-center w-full min-h-full">
