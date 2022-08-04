@@ -1,3 +1,5 @@
+@import "~prosemirror-view/style/prosemirror.css";
+
 /* prosemirror -------------------------------------------------------------- */
 .editor-body .ProseMirror {
     outline: none;
@@ -136,4 +138,21 @@
 
 .editor-body li ol {
     margin: 0 0;
+}
+
+/* autocomplete ------------------------------------------------------------------ */
+.editor-body .mention-active {
+    @apply bg-blue-500 px-0.5 rounded text-white;
+}
+
+.editor-body .mention-node {
+    @apply px-0.5 text-blue-500;
+}
+
+.editor-body .hashtag-active {
+    @apply bg-red-500 px-0.5 rounded text-white;
+}
+
+.editor-body .hashtag-node {
+    @apply px-0.5 text-red-500;
 }

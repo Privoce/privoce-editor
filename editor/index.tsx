@@ -3,23 +3,27 @@ import { EditorView } from 'prosemirror-view';
 import { EditorState, Selection } from 'prosemirror-state';
 import { DOMParser, DOMSerializer, Node } from 'prosemirror-model';
 import Toolbar from './toolbar';
+import AutocompleteContainer from '../editor/plugin/autocomplete/container';
 import schema from './schema';
 import plugins from './plugin';
 
 interface Props {
-  value: string;
+  html: string;
   autofocus?: boolean;
-  onChange: (value: string) => void;
+  onChangeHtml: (html: string) => void;
+  onChangeJson?: (json: any) => void;
 }
 
-const Index: FC<Props> = ({ value, autofocus, onChange }) => {
+const Index: FC<Props> = ({ html, autofocus, onChangeHtml, onChangeJson }) => {
   const [view, setView] = useState<EditorView | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-  const onChangeRef = useRef(onChange);
+  const onChangeHtmlRef = useRef(onChangeHtml);
+  const onChangeJsonRef = useRef(onChangeJson);
 
   useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
+    onChangeHtmlRef.current = onChangeHtml;
+    onChangeJsonRef.current = onChangeJson;
+  }, [onChangeHtml, onChangeJson]);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -36,13 +40,17 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
       return DOMParser.fromSchema(schema).parse(element);
     };
 
-    const editorState = EditorState.create({ plugins, doc: setHtml(value) });
+    const getJson = (s: EditorState): any => {
+      return s.toJSON();
+    }
+
+    const editorState = EditorState.create({ plugins, doc: setHtml(html) });
     const editorView = new EditorView(ref.current, {
       state: editorState,
       dispatchTransaction(tr) {
         const newState = editorView.state.apply(tr);
-        const html = getHtml(newState);
-        onChangeRef.current(html);
+        onChangeHtmlRef.current(getHtml(newState));
+        onChangeJsonRef.current?.(getJson(newState));
         editorView.updateState(newState);
       },
     });
@@ -63,7 +71,7 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
 
   return (
     <div
-      className="cursor-text border-primary divide-color-primary divide-y rounded-lg min-h-[160px] w-[680px]"
+      className="bg-content cursor-text border-primary rounded-lg min-h-[160px] w-[680px]"
       onClick={e => {
         e.stopPropagation();
         if (e.target !== e.currentTarget) return;
@@ -72,6 +80,7 @@ const Index: FC<Props> = ({ value, autofocus, onChange }) => {
     >
       <Toolbar view={view} schema={schema} />
       <div ref={ref} className="editor-body" spellCheck={false} />
+      <AutocompleteContainer />
     </div>
   );
 };

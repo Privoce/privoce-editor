@@ -48,28 +48,30 @@ const Index: FC<Props> = ({ view, schema }) => {
   }
 
   return (
-    <div className="cursor-auto flex items-center h-13 px-2.5">
-      <ButtonWrapper onClick={onBold}>
-        <IconBold className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper onClick={onItalic}>
-        <IconItalic className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper onClick={onUnderline}>
-        <IconUnderline className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper onClick={onStrikeThrough}>
-        <IconStrikethrough className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper onClick={onCode}>
-        <IconCode className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper>
-        <IconImage className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
-      <ButtonWrapper>
-        <IconEmoji className="fill-gray-500 dark:fill-white w-6 h-6" />
-      </ButtonWrapper>
+    <div className="border-b-primary">
+      <div className="cursor-auto flex items-center h-13 px-2.5">
+        <ButtonWrapper onClick={onBold}>
+          <IconBold className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper onClick={onItalic}>
+          <IconItalic className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper onClick={onUnderline}>
+          <IconUnderline className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper onClick={onStrikeThrough}>
+          <IconStrikethrough className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper onClick={onCode}>
+          <IconCode className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <IconImage className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <IconEmoji className="fill-gray-500 dark:fill-white w-6 h-6" />
+        </ButtonWrapper>
+      </div>
     </div>
   );
 };
