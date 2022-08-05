@@ -7,6 +7,8 @@ import headingNodeSpec from './heading';
 import codeBlockNodeSpec from './code-block';
 import mentionNodeSpec from './mention';
 import hashtagNodeSpec from './hashtag';
+import linkMarkSpec from './link';
+import hardBreakNodeSpec from './hard-break';
 
 const baseSchema = new Schema({
   nodes: {
@@ -19,6 +21,7 @@ const baseSchema = new Schema({
     code_block: codeBlockNodeSpec,
     mention: mentionNodeSpec,
     hashtag: hashtagNodeSpec,
+    hard_break: hardBreakNodeSpec,
     text: { inline: true, group: 'inline' },
   },
   marks: {
@@ -36,6 +39,7 @@ const baseSchema = new Schema({
     },
     u: { parseDOM: [{ tag: 'u' }], toDOM: () => ['u', 0] },
     code: { parseDOM: [{ tag: 'code' },], toDOM: () => ['code', 0] },
+    link: linkMarkSpec,
   },
 });
 

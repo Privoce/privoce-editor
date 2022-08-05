@@ -4,6 +4,7 @@ const linkMarkSpec: MarkSpec = {
   attrs: {
     href: { default: '' },
     title: { default: null },
+    target: { default: '_blank' },
   },
   inclusive: false,
   parseDOM: [
@@ -11,18 +12,18 @@ const linkMarkSpec: MarkSpec = {
       tag: 'a[href]',
       getAttrs: (element) => {
         if (typeof element === 'string') {
-          return { href: '', title: null };
+          return { href: '', title: null, target: '_blank' };
         }
         return {
           href: element.getAttribute('href'),
           title: element.getAttribute('title'),
+          target: element.getAttribute('target') ?? '_blank',
         };
       },
     },
   ],
   toDOM(node) {
-    const { href, title } = node.attrs;
-    return ['a', { href, title }, 0];
+    return ['a', node.attrs, 0];
   },
 };
 

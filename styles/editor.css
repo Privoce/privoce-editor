@@ -21,7 +21,7 @@
 }
 
 .editor-body .placeholder {
-    @apply text-gray-500;
+    @apply text-gray-500 cursor-text;
 }
 
 /* mark style --------------------------------------------------------------- */
@@ -69,6 +69,7 @@
 .editor-body p {
     margin-top: 0;
     margin-bottom: 1em;
+    line-height: 1.5;
 }
 
 /* code --------------------------------------------------------------------- */
