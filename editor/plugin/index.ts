@@ -7,9 +7,11 @@ import buildInputRules from './input-rules';
 import bindKeymap from './keymap';
 import schema from '../schema';
 import autocomplete from './autocomplete';
+import placeholder from './placeholder';
 import { defaultOptions } from './autocomplete/constants';
 
 const plugins: Plugin[] = [
+  placeholder('placeholder'),
   blockIndex(),
   buildInputRules(schema),
   ...autocomplete(defaultOptions),

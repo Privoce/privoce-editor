@@ -20,6 +20,10 @@
     margin-top: 0 !important;
 }
 
+.editor-body .placeholder {
+    @apply text-gray-500;
+}
+
 /* mark style --------------------------------------------------------------- */
 .editor-body a {
     @apply text-blue-500 hover:underline;

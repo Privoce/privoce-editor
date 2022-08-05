@@ -9,8 +9,10 @@ import plugins from './plugin';
 
 interface Props {
   html: string;
+  json?: any;
   autofocus?: boolean;
-  onChangeHtml: (html: string) => void;
+  placeholder?: string;
+  onChangeHtml?: (html: string) => void;
   onChangeJson?: (json: any) => void;
 }
 
@@ -40,16 +42,14 @@ const Index: FC<Props> = ({ html, autofocus, onChangeHtml, onChangeJson }) => {
       return DOMParser.fromSchema(schema).parse(element);
     };
 
-    const getJson = (s: EditorState): any => {
-      return s.toJSON();
-    }
+    const getJson = (s: EditorState): any => s.toJSON();
 
     const editorState = EditorState.create({ plugins, doc: setHtml(html) });
     const editorView = new EditorView(ref.current, {
       state: editorState,
       dispatchTransaction(tr) {
         const newState = editorView.state.apply(tr);
-        onChangeHtmlRef.current(getHtml(newState));
+        onChangeHtmlRef.current?.(getHtml(newState));
         onChangeJsonRef.current?.(getJson(newState));
         editorView.updateState(newState);
       },

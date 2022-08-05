@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <Editor autofocus html={html} onChangeHtml={setHtml} onChangeJson={setJson} />
       <pre className="w-[680px] mt-4 border-primary rounded-lg p-4 bg-content overflow-x-auto">
         <code>
-          {html}
+          {html.replaceAll('>', '>\n  ').replaceAll('<', '\n<')}
         </code>
       </pre>
       <pre className="text-sm w-[680px] mt-4 border-primary rounded-lg p-4 bg-content overflow-x-auto">
