@@ -5,21 +5,21 @@
     outline: none;
     padding: 0 16px;
 }
-
 .editor-body .ProseMirror-selectednode {
     box-shadow: rgb(180, 213, 255) 0 0 0 2px;
     /*outline: 2px solid rgb(180, 213, 255);*/
 }
 
-/* reset style ---------------------------------------------------------------*/
+/* reset style -------------------------------------------------------------- */
+.editor-body {
+    caret-color: transparent;
+}
 .editor-body > * {
     outline: none;
 }
-
 .editor-body > *:first-child {
     margin-top: 0 !important;
 }
-
 .editor-body .placeholder {
     @apply text-gray-500 cursor-text;
 }
@@ -80,7 +80,6 @@
     margin: 0;
     font-size: 85%;
 }
-
 .editor-body pre {
     @apply bg-gray-100 dark:bg-gray-700 rounded-md pt-2 pb-2 pl-4 pr-4;
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
@@ -93,7 +92,6 @@
     margin-bottom: 1em;
     box-sizing: border-box;
 }
-
 .editor-body pre > code {
     display: inline;
     padding: 0;
@@ -113,51 +111,124 @@
     margin-bottom: 1em;
     list-style-type: disc;
 }
-
 .editor-body ol {
     padding-left: 2em;
     margin-top: 0;
     margin-bottom: 1em;
     list-style-type: decimal;
 }
-
 .editor-body ul ul {
     list-style: circle;
 }
-
 .editor-body ol ul {
     list-style: circle;
 }
-
 .editor-body ol ol ul, ol ul ul, ul ol ul, ul ul ul {
     list-style: square;
 }
-
 .editor-body li p {
     margin: 0.5rem 0;
 }
-
 .editor-body li ul {
     margin: 0 0;
 }
-
 .editor-body li ol {
     margin: 0 0;
 }
 
-/* autocomplete ------------------------------------------------------------------ */
+/* autocomplete ------------------------------------------------------------- */
 .editor-body .mention-active {
     @apply bg-blue-500 px-0.5 rounded text-white;
 }
-
 .editor-body .mention-node {
     @apply px-0.5 text-blue-500;
 }
-
 .editor-body .hashtag-active {
     @apply bg-red-500 px-0.5 rounded text-white;
 }
-
 .editor-body .hashtag-node {
     @apply px-0.5 text-red-500;
 }
+
+/* cursor ------------------------------------------------------------------- */
+.editor-cursor {
+    position: absolute;
+    z-index: 3;
+}
+
+.ProseMirror-focused ~ .editor-cursor-play {
+    animation: editor-cursor-frame-0 1s infinite ease;
+}
+
+.ProseMirror-focused ~ .editor-cursor-restart {
+    animation: editor-cursor-frame-1 1s infinite ease;
+}
+
+@keyframes editor-cursor-frame-0 {
+    0% {
+        @apply bg-black;
+    }
+    53% {
+        @apply bg-black;
+    }
+    54% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes editor-cursor-frame-1 {
+    0% {
+        @apply bg-black;
+    }
+    65% {
+        @apply bg-black;
+    }
+    66% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.dark .ProseMirror-focused ~ .editor-cursor-play {
+    animation: editor-cursor-frame-dark-0 1s infinite ease;
+}
+
+.dark .ProseMirror-focused ~ .editor-cursor-restart {
+    animation: editor-cursor-frame-dark-1 1s infinite ease;
+}
+
+@keyframes editor-cursor-frame-dark-0 {
+    0% {
+        @apply bg-white;
+    }
+    53% {
+        @apply bg-white;
+    }
+    54% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes editor-cursor-frame-dark-1 {
+    0% {
+        @apply bg-white;
+    }
+    65% {
+        @apply bg-white;
+    }
+    66% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+

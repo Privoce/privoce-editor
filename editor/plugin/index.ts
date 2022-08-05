@@ -6,11 +6,13 @@ import blockIndex from './block-index';
 import buildInputRules from './input-rules';
 import bindKeymap from './keymap';
 import schema from '../schema';
+import cursor from './cursor';
 import autocomplete from './autocomplete';
 import placeholder from './placeholder';
 import { defaultOptions } from './autocomplete/constants';
 
 const plugins: Plugin[] = [
+  cursor(),
   placeholder('placeholder'),
   blockIndex(),
   buildInputRules(schema),
