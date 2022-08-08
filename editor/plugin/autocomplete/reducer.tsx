@@ -1,38 +1,30 @@
 import ReactDOM, { Root } from 'react-dom/client';
-import { EditorView } from 'prosemirror-view';
-import { ActionKind, FromTo, Options } from './types';
-import MentionSuggestions from './mention-suggestions';
+import { ActionKind, Options, PickerProps } from './types';
+import Mention from './custom/picker';
 import { containerId } from './container';
 
-interface Suggestion {
-  id: string;
-  name: string;
-}
-
-interface Picker {
-  view: EditorView | null;
-  open: boolean,
+const props: PickerProps = {
+  view: null,
+  loading: false,
+  open: false,
   current: 0,
-  range: FromTo | null;
-}
-
-const picker: Picker = { view: null, open: false, current: 0, range: null };
-
-let suggestions: Suggestion[] = [];
+  range: null,
+  items: [],
+  type: null,
+};
 
 let container: null | HTMLDivElement = null;
 let root: null | Root = null;
 
-function placeSuggestion() {
+function placePicker() {
   if (container === null) {
     container = document.querySelector(`#${containerId}`) as HTMLDivElement;
   }
   if (root === null) root = ReactDOM.createRoot(container);
   // hide list
-  container.style.display = picker.open ? 'block' : 'none';
+  container.style.display = props.open ? 'block' : 'none';
 
-  const rect = document.getElementsByClassName('autocomplete')[0]
-    ?.getBoundingClientRect();
+  const rect = document.getElementsByClassName('autocomplete')[0]?.getBoundingClientRect();
   if (!rect) {
     console.error('Autocomplete node not found');
     return;
@@ -40,72 +32,86 @@ function placeSuggestion() {
   container.style.position = 'fixed';
   container.style.top = `${rect.top + rect.height + 8}px`;
   container.style.left = `${rect.left}px`;
-  container.style.width = '240px';
+  container.style.width = 'fit-content';
 
-  root.render(<MentionSuggestions
-    index={picker.current}
-    suggestions={suggestions}
+  root.render(<Mention
+    index={props.current}
+    suggestions={props.items}
     onSelect={(i) => {
     }}
   />);
 }
 
+function onPick(p: PickerProps) {
+  if (!p.type || !p.view || !p.range) {
+    console.error('Invalid picker:', p);
+    return;
+  }
+  const nodeName = p.type.name;
+  const nodeType = p.view.state.schema.nodes[nodeName];
+  if (!nodeType) {
+    console.error('Node type not found:', nodeName);
+    return;
+  }
+
+  const selected = p.items[p.current];
+  const node = nodeType.create({ id: selected.id, name: selected.name });
+  const tr = p.view.state.tr.replaceWith(p.range.from, p.range.to, node);
+  p.view.dispatch(tr);
+}
+
 const reducer: Required<Options>['reducer'] = (action) => {
-  picker.view = action.view;
+  props.view = action.view;
+  props.type = action.type;
+  props.range = action.range;
+
   switch (action.kind) {
     case ActionKind.open: {
-      picker.current = 0;
-      picker.open = true;
-      picker.range = action.range;
-      placeSuggestion();
+      props.current = 0;
+      props.open = true;
+      placePicker();
       return true;
     }
     case ActionKind.close: {
-      picker.open = false;
-      placeSuggestion();
+      props.open = false;
+      placePicker();
       return true;
     }
     case ActionKind.up: {
-      picker.current -= 1;
-      picker.current += suggestions.length; // negative modulus doesn't work
-      picker.current %= suggestions.length;
-      placeSuggestion();
+      if (props.items.length === 0) {
+        props.current = 0;
+      } else {
+        props.current -= 1;
+        props.current += props.items.length; // negative modulus doesn't work
+        props.current %= props.items.length;
+        placePicker();
+      }
       return true;
     }
     case ActionKind.down: {
-      picker.current += 1;
-      picker.current %= suggestions.length;
-      placeSuggestion();
+      if (props.items.length === 0) {
+        props.current = 0;
+      } else {
+        props.current += 1;
+        props.current %= props.items.length;
+        placePicker();
+      }
       return true;
     }
     case ActionKind.filter: {
       // todo: fetch data
-      suggestions = [
+      props.items =  [
         { id: '1', name: 'suggestion 1' },
         { id: '2', name: 'suggestion 2' },
         { id: '3', name: 'suggestion 3' },
         { id: '4', name: 'suggestion 4' },
-        { id: '5', name: 'suggestion 5: ' + action.filter },
+        { id: '5', name: action.filter ?? '' },
       ];
-      placeSuggestion();
+      placePicker();
       return true;
     }
     case ActionKind.enter: {
-      if (!action.type) {
-        console.error('Action type not found:', action);
-        return false;
-      }
-      const nodeName = action.type.name;
-      const nodeType = action.view.state.schema.nodes[nodeName];
-      if (!nodeType) {
-        console.error('Node type not found:', nodeName);
-        return false;
-      }
-
-      const selected = suggestions[picker.current];
-      const node = nodeType.create({ id: selected.id, name: selected.name });
-      const tr = action.view.state.tr.replaceWith(action.range.from, action.range.to, node);
-      action.view.dispatch(tr);
+      onPick(props);
       return true;
     }
     default: {

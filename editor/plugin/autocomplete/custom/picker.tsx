@@ -17,7 +17,7 @@ const Index: FC<Props> = ({ index, loading, suggestions, onSelect }) => {
   if (suggestions.length === 0) return null;
 
   return (
-    <div className="bg-content shadow-2xl rounded-lg border-primary w-full">
+    <div className="bg-content shadow-2xl rounded-lg border-primary w-60">
       {suggestions.map((s, i) => (
         <button
           key={s.id}

@@ -65,6 +65,16 @@ export type Trigger = {
   decorationAttrs?: DecorationAttrs;
 };
 
+export interface PickerProps<T = any> {
+  view: EditorView | null;
+  loading: boolean;
+  open: boolean,
+  current: 0,
+  range: FromTo | null;
+  type: AutocompleteAction['type'];
+  items: T[];
+}
+
 export type Options = {
   onOpen?: (action: AutocompleteAction) => boolean;
   onClose?: (action: AutocompleteAction) => boolean;

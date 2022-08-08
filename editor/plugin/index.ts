@@ -11,6 +11,10 @@ import autocomplete from './autocomplete';
 import placeholder from './placeholder';
 import { defaultOptions } from './autocomplete/constants';
 
+export interface PluginOptions {
+  placeholder?: string;
+}
+
 const plugins: Plugin[] = [
   cursor(),
   placeholder('placeholder'),
