@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { EditorView } from 'prosemirror-view';
 import { EditorState, Selection } from 'prosemirror-state';
 import { DOMParser, DOMSerializer, Node } from 'prosemirror-model';
 import Toolbar from './toolbar';
-import AutocompleteContainer from '../editor/plugin/autocomplete/container';
+import AutocompleteContainer from './plugin/autocomplete/container';
 import schema from './schema';
 import plugins from './plugin';
 
@@ -16,7 +16,7 @@ interface Props {
   onChangeJson?: (json: any) => void;
 }
 
-const Index: FC<Props> = ({ html, autofocus, onChangeHtml, onChangeJson }) => {
+const Index: FC<Props> = ({ json, placeholder, html, autofocus, onChangeHtml, onChangeJson }) => {
   const [view, setView] = useState<EditorView | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const onChangeHtmlRef = useRef(onChangeHtml);
@@ -32,13 +32,13 @@ const Index: FC<Props> = ({ html, autofocus, onChangeHtml, onChangeJson }) => {
     const serializer = new XMLSerializer();
 
     const getHtml = (s: EditorState): string => {
-      const html = DOMSerializer.fromSchema(schema).serializeFragment(s.doc.content);
-      return serializer.serializeToString(html);
+      const newHtml = DOMSerializer.fromSchema(schema).serializeFragment(s.doc.content);
+      return serializer.serializeToString(newHtml);
     };
 
-    const setHtml = (html: string): Node => {
+    const setHtml = (newHtml: string): Node => {
       const element = document.createElement('div');
-      element.innerHTML = html;
+      element.innerHTML = newHtml;
       return DOMParser.fromSchema(schema).parse(element);
     };
 
@@ -65,13 +65,14 @@ const Index: FC<Props> = ({ html, autofocus, onChangeHtml, onChangeJson }) => {
     return () => {
       setView(null);
       editorView.destroy();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
   }, []);
 
   return (
     <div
-      className="bg-content cursor-text border-primary rounded-lg min-h-[160px] w-[680px]"
+      role="button"
+      className="bg-content cursor-text rounded-lg w-full"
+      style={{ minHeight: '100%' }}
       onClick={e => {
         e.stopPropagation();
         if (e.target !== e.currentTarget) return;
