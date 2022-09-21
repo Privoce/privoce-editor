@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { EditorView } from 'prosemirror-view';
-import { EditorState, Selection } from 'prosemirror-state';
+import { EditorState, Selection, TextSelection } from 'prosemirror-state';
 import { DOMParser, DOMSerializer, Node } from 'prosemirror-model';
 import Toolbar from './toolbar';
 import AutocompleteContainer from './plugin/autocomplete/container';
@@ -16,6 +16,21 @@ interface Props {
   onChangeJson?: (json: any) => void;
 }
 
+const serializer = new XMLSerializer();
+
+const getHtml = (s: EditorState): string => {
+  const newHtml = DOMSerializer.fromSchema(schema).serializeFragment(s.doc.content);
+  return serializer.serializeToString(newHtml);
+};
+
+const setHtml = (newHtml: string): Node => {
+  const element = document.createElement('div');
+  element.innerHTML = newHtml;
+  return DOMParser.fromSchema(schema).parse(element);
+};
+
+const getJson = (s: EditorState): any => s.toJSON();
+
 const Index: FC<Props> = ({ json, placeholder, html, autofocus, onChangeHtml, onChangeJson }) => {
   const [view, setView] = useState<EditorView | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -29,21 +44,6 @@ const Index: FC<Props> = ({ json, placeholder, html, autofocus, onChangeHtml, on
 
   useEffect(() => {
     if (!ref.current) return;
-    const serializer = new XMLSerializer();
-
-    const getHtml = (s: EditorState): string => {
-      const newHtml = DOMSerializer.fromSchema(schema).serializeFragment(s.doc.content);
-      return serializer.serializeToString(newHtml);
-    };
-
-    const setHtml = (newHtml: string): Node => {
-      const element = document.createElement('div');
-      element.innerHTML = newHtml;
-      return DOMParser.fromSchema(schema).parse(element);
-    };
-
-    const getJson = (s: EditorState): any => s.toJSON();
-
     const editorState = EditorState.create({ plugins, doc: setHtml(html) });
     const editorView = new EditorView(ref.current, {
       state: editorState,
@@ -67,6 +67,16 @@ const Index: FC<Props> = ({ json, placeholder, html, autofocus, onChangeHtml, on
       editorView.destroy();
     };
   }, []);
+
+  useEffect(() => {
+    if (!view) return;
+    const { state, dispatch } = view;
+    const { tr, doc } = state;
+    if (html === getHtml(state)) return;
+    tr.setSelection(TextSelection.create(doc, 0, doc.content.size))
+      .replaceSelectionWith(setHtml(html));
+    dispatch(tr);
+  }, [html]);
 
   return (
     <div
